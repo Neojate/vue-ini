@@ -1,10 +1,10 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./app/Modules lazy recursive ^\\.\\/.*\\.vue$":
-/*!**********************************************************!*\
-  !*** ./app/Modules/ lazy ^\.\/.*\.vue$ namespace object ***!
-  \**********************************************************/
+/***/ "./app/Modules lazy recursive ^\\.\\/.*$":
+/*!*****************************************************!*\
+  !*** ./app/Modules/ lazy ^\.\/.*$ namespace object ***!
+  \*****************************************************/
 /***/ ((module) => {
 
 function webpackEmptyAsyncContext(req) {
@@ -18,7 +18,7 @@ function webpackEmptyAsyncContext(req) {
 }
 webpackEmptyAsyncContext.keys = () => ([]);
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = "./app/Modules lazy recursive ^\\.\\/.*\\.vue$";
+webpackEmptyAsyncContext.id = "./app/Modules lazy recursive ^\\.\\/.*$";
 module.exports = webpackEmptyAsyncContext;
 
 /***/ }),
@@ -19212,16 +19212,7 @@ var appName = ((_window$document$getE = window.document.getElementsByTagName('ti
     return "".concat(_title, " - ").concat(appName);
   },
   resolve: function resolve(name) {
-    var parts = name.split('::');
-    var type = false;
-    if (parts.length > 1) type = parts[0];
-
-    if (type) {
-      var nameVue = parts[1].split('.')[0];
-      return __webpack_require__("./app/Modules lazy recursive ^\\.\\/.*\\.vue$")("./".concat(parts[0], "/Views/").concat(nameVue, ".vue"));
-    } else {
-      return __webpack_require__("./resources/js/Pages lazy recursive ^\\.\\/.*$")("./".concat(name));
-    }
+    return resolveView(name);
   },
   setup: function setup(_ref) {
     var el = _ref.el,
@@ -19242,6 +19233,18 @@ var appName = ((_window$document$getE = window.document.getElementsByTagName('ti
 _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__.InertiaProgress.init({
   color: '#4B5563'
 });
+
+function resolveView(name) {
+  var parts = name.split('::');
+
+  if (parts.length > 1) {
+    var module = parts[0];
+    var view = parts[1];
+    return __webpack_require__("./app/Modules lazy recursive ^\\.\\/.*$")("./".concat(module, "/Views/").concat(view));
+  }
+
+  return __webpack_require__("./resources/js/Pages lazy recursive ^\\.\\/.*$")("./".concat(name));
+}
 
 /***/ }),
 
