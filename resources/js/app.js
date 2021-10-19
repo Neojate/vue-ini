@@ -8,7 +8,17 @@ const appName = window.document.getElementsByTagName('title')[0]?.innerText || '
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolveView(name),
+    resolve: (name) => {
+        let parts = name.split('::');
+        let type = false;
+        if (parts.length > 1)
+            type = parts[0];
+        if(type) {
+            let nameVue = parts[1].split('.')[0];
+            return require(`../../app/Modules/${type}/Views/${nameVue}.vue`).default;
+        }
+        return require(`./Pages/${name}`).default
+    },
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })
             .use(plugin)
@@ -18,13 +28,3 @@ createInertiaApp({
 });
 
 InertiaProgress.init({ color: '#4B5563' });
-
-function resolveView(name) {
-    let parts = name.split('::');
-    if (parts.length > 1) {
-        let module = parts[0];
-        let view = parts[1];
-        return import(`../../app/Modules/${module}/Views/${view}`);
-    }
-    return import(`./Pages/${name}`);
-}
